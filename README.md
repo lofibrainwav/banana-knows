@@ -1,4 +1,4 @@
-# Banana Know
+# Banana Knows
 
 > 개인을 위한 초개인화 Knowledge Creator 시스템.
 
