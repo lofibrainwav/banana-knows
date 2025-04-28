@@ -1,0 +1,49 @@
+# /Volumes/X9 Pro/Claude_Project/docker-compose.yml
+
+version: '3.8' # 최신 안정 버전 사용
+
+services:
+  web:
+    image: php:8.2-apache # PHP 8.2 와 Apache 포함 이미지 (버전은 필요에 따라 조정)
+    container_name: mcp_webserver # 컨테이너 이름 지정
+    ports:
+      - "8080:80" # 호스트의 8080 포트를 컨테이너의 80 포트로 연결 (기존 80포트 충돌 방지)
+    volumes:
+      # macOS 프로젝트 폴더를 컨테이너의 Apache 문서 루트로 마운트
+      - ./mcp_project:/var/www/html # 'mysite' 폴더 대신 공백 없는 경로 사용
+      # (선택적) Apache 설정 커스터마이징 필요 시
+      # - ./apache_config/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      # - ./php_config/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - db # DB 서비스가 먼저 시작되도록 의존성 설정
+    environment:
+      # PHP 코드에서 DB 접속 시 사용할 환경 변수 (옵션)
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - mcp_network
+
+  db:
+    image: mysql:8.0 # MySQL 8.0 이미지 (버전은 필요에 따라 조정)
+    container_name: mcp_database # 컨테이너 이름 지정
+    ports:
+      - "33066:3306" # 호스트의 33066 포트를 컨테이너의 3306 포트로 연결 (기존 3306 포트 충돌 방지)
+    volumes:
+      # 데이터 영속성을 위한 명명된 볼륨 사용
+      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} # 루트 비밀번호
+      MYSQL_DATABASE: ${MYSQL_DATABASE}           # 생성할 데이터베이스 이름
+      MYSQL_USER: ${MYSQL_USER}                 # 생성할 사용자 이름
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}           # 생성할 사용자 비밀번호
+    networks:
+      - mcp_network
+
+volumes:
+  db_data: # 명명된 볼륨 정의
+
+networks:
+  mcp_network: # 사용자 정의 네트워크 정의
+    driver: bridge 

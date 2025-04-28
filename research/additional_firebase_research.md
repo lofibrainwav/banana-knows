@@ -1,0 +1,1 @@
+Summary of additional research: Fix n8n API key by using environment variables (e.g., process.env.API_KEY) and resolve port conflicts by setting to 5679. Sources include Google Cloud blog, n8n forums (20+ sources).

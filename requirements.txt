@@ -1,0 +1,11 @@
+flask
+python-dotenv
+sentry-sdk
+prometheus-client
+requests
+youtube-transcript-api
+ctranslate2
+Jinja2
+SQLAlchemy
+FastAPI
+Uvicorn 
