@@ -1,0 +1,22 @@
+# Dependencies
+node_modules
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Testing cache
+.pytest_cache/
+
+# Environment variables
+.env*
+
+# macOS metadata
+.DS_Store
+._*
+
+# IDE settings (optional but recommended)
+.vscode/
+.idea/

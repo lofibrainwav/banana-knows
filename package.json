@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "@playwright/mcp": "^0.0.15"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.3.0"
   }
 }
